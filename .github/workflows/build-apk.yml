@@ -24,6 +24,18 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+      - name: Center launcher icon within Android mask
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          path = 'app/src/main/res/drawable-nodpi/ic_launcher.jpg'
+          original = Image.open(path).convert('RGB')
+          canvas = Image.new('RGB', (512, 512), '#153f32')
+          icon = original.resize((408, 408), Image.Resampling.LANCZOS)
+          canvas.paste(icon, (52, 52))
+          canvas.save(path, quality=95)
+          PY
       - name: Build APK
         run: gradle assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
