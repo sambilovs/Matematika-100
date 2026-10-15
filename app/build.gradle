@@ -1,0 +1,4 @@
+plugins { id "com.android.application" }
+android { namespace "com.sambil.math100"; compileSdk 35
+ defaultConfig { applicationId "com.sambil.math100"; minSdk 23; targetSdk 28; versionCode 1; versionName "1.0" }
+}
